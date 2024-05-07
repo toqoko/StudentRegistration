@@ -1,0 +1,7 @@
+.idea/
+private/
+
+
+.env
+.env.*
+!.env.example
