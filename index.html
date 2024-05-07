@@ -1,162 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Форма для заполнения данных</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f0f0f0;
-        }
-        h2 {
-            text-align: center;
-        }
-        form {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
-        input[type="text"],
-        input[type="tel"],
-        input[type="date"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        fieldset {
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 15px;
-        }
-        legend {
-            font-weight: bold;
-        }
-        input[type="submit"] {
-            display: block;
-            margin: 0 auto;
-            background-color: #4caf50;
-            color: #fff;
-            padding: 8px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-        .error {
-            color: red;
-            font-size: 12px;
-        }
-    </style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Форма для заполнения данных</title>
+	<link rel="stylesheet" href="src/style/main.css">
 </head>
 <body>
-    <h2>Форма для заполнения данных:</h2>
-    <form>
-        <label for="fullName">1. ФИО:</label><br>
-        <input type="text" id="fullName" name="fullName" required><br>
+	<h2>Форма для заполнения данных:</h2>
+	<form>
+		<fieldset>
+			<legend>ФИО:</legend>
+			<input type="text" id="fullName" name="fullName" required><br>
+		</fieldset>
 
-        <label for="phoneNumber">2. Номер телефона:</label><br>
-        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Пример: 123-45-678" required><br>
+		<fieldset>
+			<legend>Номер телефона:</legend>
+			<input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Пример: 25 999-99-99" required><br>
+		</fieldset>
 
-        <label for="dob">3. Дата рождения:</label><br>
-        <input type="date" id="dob" name="dob" required><br>
+		<fieldset>
+			<legend>Дата рождения:</legend>
+			<input type="date" id="dob" name="dob" required><br>
+		</fieldset>
+		
+		<fieldset>
+			<legend>Паспортные данные:</legend>
+			<label for="passportSerialNumber">Серийный номер:</label><br>
+			<input type="text" id="passportSerialNumber" name="passportSerialNumber" required><br>
 
-        <fieldset>
-            <legend>4. Паспортные данные:</legend>
-            <label for="passportSerialNumber">Серийный номер:</label><br>
-            <input type="text" id="passportSerialNumber" name="passportSerialNumber" required><br>
+			<label for="passportIssuedDate">Дата выдачи</label><br>
+			<input type="text" id="passportIssuedDate" name="passportIssuedDate" required><br>
+			<label for="passportIssuedAuthority">Кем выдан:</label><br>
+			<input type="text" id="passportIssuedAuthority" name="passportIssuedAuthority" required><br>
 
-            <label for="passportIssuedDate">Дата выдачи</label><br>
-            <input type="text" id="passportIssuedDate" name="passportIssuedDate" required><br>
-            <label for="passportIssuedAuthority">Кем выдан:</label><br>
-            <input type="text" id="passportIssuedAuthority" name="passportIssuedAuthority" required><br>
+			<label for="passportIDNumber">Идентификационный номер:</label><br>
+			<input type="text" id="passportIDNumber" name="passportIDNumber" required><br>
+		</fieldset>
 
-            <label for="passportIDNumber">Идентификационный номер:</label><br>
-            <input type="text" id="passportIDNumber" name="passportIDNumber" required><br>
-        </fieldset>
+		<fieldset id="father">
+			<legend>
+					Отец:
+					<select name="father" onchange="toggleFields('father')">
+							<option value="father">Отец</option>
+							<option value="stepfather">Отчим</option>
+							<option value="divorced">Разведён</option>
+							<option value="deceased">Умер</option>
+					</select>
+			</legend>
 
-        <fieldset>
-            <legend>5. Отец:</legend>
-            <label for="fatherFullName">ФИО:</label><br>
-            <input type="text" id="fatherFullName" name="fatherFullName" required><br>
+			<div class="fullName">
+				<label for="fatherFullName">ФИО:</label><br>
+				<input type="text" id="fatherFullName" name="fatherFullName" required><br>
+			</div>
 
-            <label for="fatherJob">Место работы:</label><br>
-            <input type="text" id="fatherJob" name="fatherJob" required>
-            <label for="fatherPosition">Должность:</label><br>
-            <input type="text" id="fatherPosition" name="fatherPosition" required>
+			<div class="job">
+				<label for="fatherJob">Место работы:</label><br>
+				<input type="text" id="fatherJob" name="fatherJob" required>
+			</div>
+			
+			<div class="position">
+				<label for="fatherPosition">Должность:</label><br>
+				<input type="text" id="fatherPosition" name="fatherPosition" required>
+			</div>
 
-            <label for="fatherPhoneNumber">Номер телефона:</label><br>
-            <input type="tel" id="fatherPhoneNumber" name="fatherPhoneNumber" placeholder="Пример: 123-45-678" required><br>
-        </fieldset>
+			<div class="phoneNumber">
+				<label for="fatherPhoneNumber">Номер телефона:</label><br>
+				<input type="tel" id="fatherPhoneNumber" name="fatherPhoneNumber" placeholder="Пример: 25 999-99-99" required><br>
+			</div>
+		</fieldset>
 
-        <fieldset>
-            <legend>6. Мать:</legend>
-            <label for="motherFullName">ФИО:</label><br>
-            <input type="text" id="motherFullName" name="motherFullName" required><br>
+		<fieldset id="mother">
+			<legend>
+					Мать:
+					<select name="mother" onchange="toggleFields('mother')">
+							<option value="mother">Мать</option>
+							<option value="stepmother">Мачеха</option>
+							<option value="divorced">Разведена</option>
+							<option value="deceased">Умерла</option>
+					</select>
+			</legend>
 
-            <label for="motherJob">Место работы:</label><br>
-            <input type="text" id="motherJob" name="motherJob" required>
-            <label for="motherPposition">Должность:</label><br>
-            <input type="text" id="motherPposition" name="motherPposition" required>
+			<div class="fullName">
+				<label for="motherFullName">ФИО:</label><br>
+				<input type="text" id="motherFullName" name="motherFullName" required><br>
+			</div>
 
-            <label for="motherPhoneNumber">Номер телефона:</label><br>
-            <input type="tel" id="motherPhoneNumber" name="motherPhoneNumber" placeholder="Пример: 123-45-678" required><br>
-        </fieldset>
+			<div class="job">
+				<label for="motherJob">Место работы:</label><br>
+				<input type="text" id="motherJob" name="motherJob" required>
+			</div>
+			
+			<div class="position">
+				<label for="motherPosition">Должность:</label><br>
+				<input type="text" id="motherPosition" name="motherPosition" required>
+			</div>
 
-        <label for="homePhoneNumber">7. Домашний телефон:</label><br>
-        <input type="tel" id="homePhoneNumber" name="homePhoneNumber" placeholder="Пример: 123-45-678" required><br>
+			<div class="phoneNumber">
+				<label for="motherPhoneNumber">Номер телефона:</label><br>
+				<input type="tel" id="motherPhoneNumber" name="motherPhoneNumber" placeholder="Пример: 25 999-99-99" required><br>
+			</div>
+		</fieldset>
 
-        <fieldset>
-            <legend>8. Адрес:</legend>
-            <label for="region">Область:</label><br>
-            <input type="text" id="region" name="region" required><br>
+		<fieldset>
+			<legend>Домашний телефон:</legend>
+			<input type="tel" id="homePhoneNumber" name="homePhoneNumber" placeholder="Пример: 25 999-99-99" required><br>
+		</fieldset>
 
-            <label for="city">Город:</label><br>
-            <input type="text" id="city" name="city" required><br>
+		<fieldset>
+			<legend>Адрес:</legend>
+			<label for="region">Область:</label><br>
+			<input type="text" id="region" name="region" required><br>
 
-            <label for="street">Улица:</label><br>
-            <input type="text" id="street" name="street" required><br>
+			<label for="city">Город:</label><br>
+			<input type="text" id="city" name="city" required><br>
 
-            <label for="house">Дом:</label><br>
-            <input type="text" id="house" name="house" required>
+			<label for="street">Улица:</label><br>
+			<input type="text" id="street" name="street" required><br>
 
-            <label for="zipCode">Индекс:</label><br>
-            <input type="text" id="zipCode" name="zipCode" required><br>
-        </fieldset>
+			<label for="house">Дом:</label><br>
+			<input type="text" id="house" name="house" required>
 
-        <input type="submit" value="Отправить">
-    </form>
+			<label for="zipCode">Индекс:</label><br>
+			<input type="text" id="zipCode" name="zipCode" required><br>
+		</fieldset>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const phoneInputs = document.querySelectorAll('input[type="tel"]');
-            phoneInputs.forEach(function(input) {
-                input.addEventListener("input", function() {
-                    let value = this.value.replace(/\D/g, '');
-                    if (value.length > 0) {
-                        value = value.match(/(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
-                        this.value = !value[2] ? value[1] : value[1] + ' ' + value[2] + (value[3] ? '-' + value[3] : '');
-                    }
-                });
-            });
-        });
-    </script>
+		<input type="submit" value="Отправить">
+	</form>
+
+	<script src="src/js/main.js"></script>
 </body>
 </html>
