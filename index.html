@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Форма для заполнения данных</title>
+	<link rel="stylesheet" href="src/style/main.css">
+</head>
+<body>
+	<h2>Форма для заполнения данных:</h2>
+	<form>
+		<fieldset>
+			<legend>ФИО:</legend>
+			<input type="text" id="fullName" name="fullName" placeholder="Иванов И.И" required><br>
+		</fieldset>
+
+		<fieldset>
+			<legend>Номер телефона:</legend>
+			<input type="tel" id="phoneNumber" name="phoneNumber" placeholder="+375 25 999-77-66" required><br>
+		</fieldset>
+
+		<fieldset>
+			<legend>Дата рождения:</legend>
+			<input type="date" id="dob" name="dob" placeholder="09.09.2006" required><br>
+		</fieldset>
+		
+		<fieldset>
+			<legend>Паспортные данные:</legend>
+			<label for="passportSerialNumber">Номер паспорта:</label><br>
+			<input type="text" id="passportSerialNumber" name="passportSerialNumber" placeholder="AA 1111111" required><br>
+
+			<label for="passportIssuedDate">Дата выдачи</label><br>
+			<input type="text" id="passportIssuedDate" name="passportIssuedDate" placeholder="01.01.2001" required><br>
+			<label for="passportIssuedAuthority">Кем выдан:</label><br>
+			<input type="text" id="passportIssuedAuthority" name="passportIssuedAuthority" placeholder="Светлогорский РОВД Гомельской обл" required><br>
+
+			<label for="passportIDNumber">Идентификационный номер:</label><br>
+			<input type="text" id="passportIDNumber" name="passportIDNumber" placeholder="1111111A111AA1" required><br>
+		</fieldset>
+
+		<fieldset id="father">
+			<legend>
+					Отец:
+					<select name="father" onchange="toggleFields('father')">
+							<option value="father">Отец</option>
+							<option value="stepfather">Отчим</option>
+							<option value="divorced">Разведён</option>
+							<option value="deceased">Умер</option>
+					</select>
+			</legend>
+
+			<div class="fullName">
+				<label for="fatherFullName">ФИО:</label><br>
+				<input type="text" id="fatherFullName" name="fatherFullName" placeholder="Иванов И.И" required><br>
+			</div>
+
+			<div class="job">
+				<label for="fatherJob">Место работы:</label><br>
+				<input type="text" id="fatherJob" name="fatherJob" placeholder="Фандок" required>
+			</div>
+			
+			<div class="position">
+				<label for="fatherPosition">Должность:</label><br>
+				<input type="text" id="fatherPosition" name="fatherPosition" placeholder="Слесарь" required>
+			</div>
+
+			<div class="phoneNumber">
+				<label for="fatherPhoneNumber">Номер телефона:</label><br>
+				<input type="tel" id="fatherPhoneNumber" name="fatherPhoneNumber" placeholder="+375 25 999-77-66" required><br>
+			</div>
+		</fieldset>
+
+		<fieldset id="mother">
+			<legend>
+					Мать:
+					<select name="mother" onchange="toggleFields('mother')">
+							<option value="mother">Мать</option>
+							<option value="stepmother">Мачеха</option>
+							<option value="divorced">Разведена</option>
+							<option value="deceased">Умерла</option>
+					</select>
+			</legend>
+
+			<div class="fullName">
+				<label for="motherFullName">ФИО:</label><br>
+				<input type="text" id="motherFullName" name="motherFullName" placeholder="Иванова И.И" required><br>
+			</div>
+
+			<div class="job">
+				<label for="motherJob">Место работы:</label><br>
+				<input type="text" id="motherJob" name="motherJob" placeholder="Фандок" required>
+			</div>
+			
+			<div class="position">
+				<label for="motherPosition">Должность:</label><br>
+				<input type="text" id="motherPosition" name="motherPosition" placeholder="Слесарь" required>
+			</div>
+
+			<div class="phoneNumber">
+				<label for="motherPhoneNumber">Номер телефона:</label><br>
+				<input type="tel" id="motherPhoneNumber" name="motherPhoneNumber" placeholder="+375 25 999-77-66" required><br>
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend>Домашний телефон:</legend>
+			<input type="tel" id="homePhoneNumber" name="homePhoneNumber" placeholder="802 9999 99 99"><br>
+		</fieldset>
+
+		<fieldset>
+			<legend>Адрес:</legend>
+
+			<label for="region">Область:</label><br>
+			<input type="text" list="regions_list" id="region" name="region" placeholder="Могилёвская" required>
+			<datalist id="regions_list">
+				<option value="Брестская">
+				<option value="Витебская">
+				<option value="Гомельская">
+				<option value="Гродненская">
+				<option value="Минская">
+				<option value="Могилёвская">
+			</datalist>
+
+			<label for="city">Город:</label><br>
+			<input type="text" id="city" name="city" placeholder="Бобруйск" required><br>
+			</datalist>
+
+			<label for="street">Улица:</label><br>
+			<input type="text" id="street" name="street" placeholder="Ленина 93" required><br>
+
+			<label for="house">Дом:</label><br>
+			<input type="text" id="house" name="house" placeholder="33" required>
+
+			<label for="zipCode">Индекс:</label><br>
+			<input type="text" id="zipCode" name="zipCode" placeholder="213802" required><br>
+		</fieldset>
+
+		<fieldset>
+			<legend>Дополнительно:</legend>
+			<div>
+				<input type="radio" id="large_family" name="family">
+				<label for="large_family">Без ответа</label>
+			</div>
+
+			<div>
+				<input type="radio" id="large_family" name="family">
+				<label for="large_family">Многодетная</label>
+			</div>
+			
+			<div>
+				<input type="radio" id="orphan" name="family">
+				<label for="orphan">Сирота</label>
+			</div>
+			
+			<div>
+				<input type="radio" id="incomplete_family" name="family">
+				<label for="incomplete_family">Неполная</label>
+			</div>
+			
+			<div>
+				<input type="checkbox" id="chernobyl" name="chernobyl">
+				<label for="chernobyl">ЧАЭС</label>
+			</div>
+		</fieldset>
+		
+		<input type="submit" value="Отправить">
+	</form>
+
+	<script src="src/js/main.js"></script>
+</body>
+</html>
