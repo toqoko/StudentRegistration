@@ -48,7 +48,7 @@ select {
 legend {
   font-weight: bold;
 }
-input[type="submit"] {
+#submitButton {
   display: block;
   margin: 0 auto;
   background-color: #4caf50;
@@ -59,10 +59,52 @@ input[type="submit"] {
   cursor: pointer;
   font-size: 14px;
 }
-input[type="submit"]:hover {
+#submitButton {
   background-color: #45a049;
 }
 .error {
   color: red;
   font-size: 12px;
+}
+.loading-spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #646464;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#confirmationDialog {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  color: black;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  font-size: 0.9em;
+}
+
+#confirmationDialog button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#confirmationDialog button:hover {
+  background-color: #2980b9;
 }
