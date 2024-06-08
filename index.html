@@ -8,10 +8,22 @@
 </head>
 <body>
 	<h2>Форма для заполнения данных:</h2>
-	<form>
+	<form id="dataForm">
+		<fieldset>
+			<legend>Номер группы:</legend>
+			<input type="text" id="groupName" name="groupName" placeholder="ПО-6" required><br>
+		</fieldset>
+
 		<fieldset>
 			<legend>ФИО:</legend>
-			<input type="text" id="fullName" name="fullName" placeholder="Иванов И.И" required><br>
+			<label for="firstName">Фамилия:</label><br>
+			<input type="text" id="firstName" name="firstName" placeholder="Иванов" required><br>
+
+			<label for="fullName">Имя:</label><br>
+			<input type="text" id="fullName" name="fullName" placeholder="Иван" required><br>
+
+			<label for="surname">Отчество:</label><br>
+			<input type="text" id="surname" name="surname" placeholder="Иванович" required><br>
 		</fieldset>
 
 		<fieldset>
@@ -21,7 +33,81 @@
 
 		<fieldset>
 			<legend>Дата рождения:</legend>
-			<input type="date" id="dob" name="dob" placeholder="09.09.2006" required><br>
+			<label for="day">День:</label>
+			<select id="day" name="day">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+				<option value="10">10</option>
+				<option value="11">11</option>
+				<option value="12">12</option>
+				<option value="13">13</option>
+				<option value="14">14</option>
+				<option value="15">15</option>
+				<option value="16">16</option>
+				<option value="17">17</option>
+				<option value="18">18</option>
+				<option value="19">19</option>
+				<option value="20">20</option>
+				<option value="21">21</option>
+				<option value="22">22</option>
+				<option value="23">23</option>
+				<option value="24">24</option>
+				<option value="25">25</option>
+				<option value="26">26</option>
+				<option value="27">27</option>
+				<option value="28">28</option>
+				<option value="29">29</option>
+				<option value="30">30</option>
+				<option value="31">31</option>
+			</select>
+
+			<label for="month">Месяц:</label>
+			<select id="month" name="month">
+				<option value="1">Январь</option>
+				<option value="2">Февраль</option>
+				<option value="3">Март</option>
+				<option value="4">Апрель</option>
+				<option value="5">Май</option>
+				<option value="6">Июнь</option>
+				<option value="7">Июль</option>
+				<option value="8">Август</option>
+				<option value="9">Сентябть</option>
+				<option value="10">Октябрь</option>
+				<option value="11">Ноябрь</option>
+				<option value="12">Декабрь</option>
+			</select>
+
+			<label for="year">Год:</label>
+			<select id="year" name="year">
+				<option value="2000">2000</option>
+				<option value="2001">2001</option>
+				<option value="2002">2002</option>
+				<option value="2003">2003</option>
+				<option value="2004">2004</option>
+				<option value="2005">2005</option>
+				<option value="2006">2006</option>
+				<option value="2007">2007</option>
+				<option value="2008">2008</option>
+				<option value="2009">2009</option>
+				<option value="2010">2010</option>
+				<option value="2011">2011</option>
+				<option value="2012">2012</option>
+				<option value="2013">2013</option>
+				<option value="2014">2014</option>
+				<option value="2015">2015</option>
+				<option value="2016">2016</option>
+				<option value="2017">2017</option>
+				<option value="2018">2018</option>
+				<option value="2019">2019</option>
+				<option value="2020">2020</option>
+			</select>
 		</fieldset>
 		
 		<fieldset>
@@ -51,22 +137,22 @@
 
 			<div class="fullName">
 				<label for="fatherFullName">ФИО:</label><br>
-				<input type="text" id="fatherFullName" name="fatherFullName" placeholder="Иванов И.И" required><br>
+				<input type="text" id="fatherFullName" name="fatherFullName" placeholder="Иванов Иван Иванович"><br>
 			</div>
 
 			<div class="job">
 				<label for="fatherJob">Место работы:</label><br>
-				<input type="text" id="fatherJob" name="fatherJob" placeholder="Фандок" required>
+				<input type="text" id="fatherJob" name="fatherJob" placeholder="Фандок">
 			</div>
 			
 			<div class="position">
 				<label for="fatherPosition">Должность:</label><br>
-				<input type="text" id="fatherPosition" name="fatherPosition" placeholder="Слесарь" required>
+				<input type="text" id="fatherPosition" name="fatherPosition" placeholder="Слесарь">
 			</div>
 
 			<div class="phoneNumber">
 				<label for="fatherPhoneNumber">Номер телефона:</label><br>
-				<input type="tel" id="fatherPhoneNumber" name="fatherPhoneNumber" placeholder="+375 25 999-77-66" required><br>
+				<input type="tel" id="fatherPhoneNumber" name="fatherPhoneNumber" placeholder="+375 25 999-77-66"><br>
 			</div>
 		</fieldset>
 
@@ -83,22 +169,22 @@
 
 			<div class="fullName">
 				<label for="motherFullName">ФИО:</label><br>
-				<input type="text" id="motherFullName" name="motherFullName" placeholder="Иванова И.И" required><br>
+				<input type="text" id="motherFullName" name="motherFullName" placeholder="Иванова Ирина Ивановна"><br>
 			</div>
 
 			<div class="job">
 				<label for="motherJob">Место работы:</label><br>
-				<input type="text" id="motherJob" name="motherJob" placeholder="Фандок" required>
+				<input type="text" id="motherJob" name="motherJob" placeholder="Фандок">
 			</div>
 			
 			<div class="position">
 				<label for="motherPosition">Должность:</label><br>
-				<input type="text" id="motherPosition" name="motherPosition" placeholder="Слесарь" required>
+				<input type="text" id="motherPosition" name="motherPosition" placeholder="Слесарь">
 			</div>
 
 			<div class="phoneNumber">
 				<label for="motherPhoneNumber">Номер телефона:</label><br>
-				<input type="tel" id="motherPhoneNumber" name="motherPhoneNumber" placeholder="+375 25 999-77-66" required><br>
+				<input type="tel" id="motherPhoneNumber" name="motherPhoneNumber" placeholder="+375 25 999-77-66"><br>
 			</div>
 		</fieldset>
 
@@ -111,7 +197,7 @@
 			<legend>Адрес:</legend>
 
 			<label for="region">Область:</label><br>
-			<input type="text" list="regions_list" id="region" name="region" placeholder="Могилёвская" required>
+			<input type="text" list="regions_list" id="region" name="region" placeholder="Могилёвская" onclick="setRegion()" required>
 			<datalist id="regions_list">
 				<option value="Брестская">
 				<option value="Витебская">
@@ -122,7 +208,7 @@
 			</datalist>
 
 			<label for="city">Город:</label><br>
-			<input type="text" id="city" name="city" placeholder="Бобруйск" required><br>
+			<input type="text" id="city" name="city" placeholder="Бобруйск" onclick="inputCity()" required><br>
 			</datalist>
 
 			<label for="street">Улица:</label><br>
@@ -137,34 +223,43 @@
 
 		<fieldset>
 			<legend>Дополнительно:</legend>
-			<div>
-				<input type="radio" id="large_family" name="family">
-				<label for="large_family">Без ответа</label>
-			</div>
+			<fieldset>
+				<legend>Семья:</legend>
+					<input type="radio" id="complete_family" name="family">
+					<label for="complete_family">Полная</label>
+					
+					<input type="radio" id="incomplete_family" name="family">
+					<label for="incomplete_family">Неполная</label>
 
-			<div>
-				<input type="radio" id="large_family" name="family">
-				<label for="large_family">Многодетная</label>
-			</div>
+					<input type="radio" id="orphan" name="family">
+					<label for="orphan">Сирота</label>
+
+					<input type="checkbox" id="large_family" name="large_family">
+					<label for="large_family">Более 3 детей</label>
+			</fieldset>
 			
-			<div>
-				<input type="radio" id="orphan" name="family">
-				<label for="orphan">Сирота</label>
-			</div>
-			
-			<div>
-				<input type="radio" id="incomplete_family" name="family">
-				<label for="incomplete_family">Неполная</label>
-			</div>
-			
-			<div>
-				<input type="checkbox" id="chernobyl" name="chernobyl">
-				<label for="chernobyl">ЧАЭС</label>
-			</div>
+			<fieldset>
+				<legend>ЧАЭС:</legend>
+					<input type="checkbox" id="chernobyl" name="chernobyl">
+					<label for="chernobyl">Являюсь</label>
+			</fieldset>
+
+			<fieldset>
+				<legend>БРСМ:</legend>
+					<input type="checkbox" id="brsm" name="brsm">
+					<label for="chernobyl">Состою</label>
+			</fieldset>
 		</fieldset>
 		
-		<input type="submit" value="Отправить">
+		<button type="submit" id="submitButton">Отправить</div>
+	</button>
 	</form>
+
+    <div id="confirmationDialog">
+        Данные успешно отправлены
+        <br>
+        <button onclick="closeDialog()">OK</button>
+    </div>
 
 	<script src="src/js/main.js"></script>
 </body>
