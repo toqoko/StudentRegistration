@@ -11,7 +11,12 @@
 	<form id="dataForm">
 		<fieldset>
 			<legend>Номер группы:</legend>
-			<input type="text" id="groupName" name="groupName" placeholder="ПО-6" required><br>
+			<select id="groupName" name="groupName" required>
+				<option value="" disabled selected>Номер группы</option>
+				<option value="ПО-6">ПО-5</option>
+				<option value="ПО-7">ПО-6</option>
+				<option value="ПО-8">РС02-23</option>
+			</select><br>
 		</fieldset>
 
 		<fieldset>
@@ -35,41 +40,12 @@
 			<legend>Дата рождения:</legend>
 			<label for="day">День:</label>
 			<select id="day" name="day">
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-				<option value="6">6</option>
-				<option value="7">7</option>
-				<option value="8">8</option>
-				<option value="9">9</option>
-				<option value="10">10</option>
-				<option value="11">11</option>
-				<option value="12">12</option>
-				<option value="13">13</option>
-				<option value="14">14</option>
-				<option value="15">15</option>
-				<option value="16">16</option>
-				<option value="17">17</option>
-				<option value="18">18</option>
-				<option value="19">19</option>
-				<option value="20">20</option>
-				<option value="21">21</option>
-				<option value="22">22</option>
-				<option value="23">23</option>
-				<option value="24">24</option>
-				<option value="25">25</option>
-				<option value="26">26</option>
-				<option value="27">27</option>
-				<option value="28">28</option>
-				<option value="29">29</option>
-				<option value="30">30</option>
-				<option value="31">31</option>
+				<option>выбрать день</option>
 			</select>
 
 			<label for="month">Месяц:</label>
 			<select id="month" name="month">
+				<option>выбрать месяц</option>
 				<option value="1">Январь</option>
 				<option value="2">Февраль</option>
 				<option value="3">Март</option>
@@ -78,7 +54,7 @@
 				<option value="6">Июнь</option>
 				<option value="7">Июль</option>
 				<option value="8">Август</option>
-				<option value="9">Сентябть</option>
+				<option value="9">Сентябрь</option>
 				<option value="10">Октябрь</option>
 				<option value="11">Ноябрь</option>
 				<option value="12">Декабрь</option>
@@ -86,42 +62,35 @@
 
 			<label for="year">Год:</label>
 			<select id="year" name="year">
-				<option value="2000">2000</option>
-				<option value="2001">2001</option>
-				<option value="2002">2002</option>
-				<option value="2003">2003</option>
-				<option value="2004">2004</option>
-				<option value="2005">2005</option>
-				<option value="2006">2006</option>
-				<option value="2007">2007</option>
-				<option value="2008">2008</option>
-				<option value="2009">2009</option>
-				<option value="2010">2010</option>
-				<option value="2011">2011</option>
-				<option value="2012">2012</option>
-				<option value="2013">2013</option>
-				<option value="2014">2014</option>
-				<option value="2015">2015</option>
-				<option value="2016">2016</option>
-				<option value="2017">2017</option>
-				<option value="2018">2018</option>
-				<option value="2019">2019</option>
-				<option value="2020">2020</option>
+				<option>выбрать год</option>
 			</select>
 		</fieldset>
 		
 		<fieldset>
 			<legend>Паспортные данные:</legend>
-			<label for="passportSerialNumber">Номер паспорта:</label><br>
-			<input type="text" id="passportSerialNumber" name="passportSerialNumber" placeholder="AA 1111111" required><br>
+			<div class="tooltip">
+				<label for="passportSerialNumber">Номер паспорта:</label><br>
+				<input type="text" id="passportSerialNumber" name="passportSerialNumber" placeholder="AA 1111111" required pattern="^[A-Z]{2} \d{7}$" title="Введите номер паспорта в формате: AA 1234567"><br>
+				<span class="tooltiptext">Введите номер паспорта в формате: AA 1234567</span>
+			</div>
 
-			<label for="passportIssuedDate">Дата выдачи</label><br>
-			<input type="text" id="passportIssuedDate" name="passportIssuedDate" placeholder="01.01.2001" required><br>
-			<label for="passportIssuedAuthority">Кем выдан:</label><br>
-			<input type="text" id="passportIssuedAuthority" name="passportIssuedAuthority" placeholder="Светлогорский РОВД Гомельской обл" required><br>
+			<div class="tooltip">
+				<label for="passportIssuedDate">Дата выдачи:</label><br>
+				<input type="text" id="passportIssuedDate" name="passportIssuedDate" placeholder="01.01.2001" required pattern="^\d{2}\.\d{2}\.\d{4}$" title="Введите дату в формате: 01.01.2001"><br>
+				<span class="tooltiptext">Введите дату в формате: 01.01.2001</span>
+			</div>
 
-			<label for="passportIDNumber">Идентификационный номер:</label><br>
-			<input type="text" id="passportIDNumber" name="passportIDNumber" placeholder="1111111A111AA1" required><br>
+			<div class="tooltip">
+				<label for="passportIssuedAuthority">Кем выдан:</label><br>
+				<input type="text" id="passportIssuedAuthority" name="passportIssuedAuthority" placeholder="Светлогорский РОВД Гомельской обл" required><br>
+				<span class="tooltiptext">Укажите орган, выдавший паспорт</span>
+			</div>
+
+			<div class="tooltip">
+				<label for="passportIDNumber">Идентификационный номер:</label><br>
+				<input type="text" id="passportIDNumber" name="passportIDNumber" placeholder="1111111A111AA1" required pattern="^\d{7}[A-Z]\d{3}[A-Z]{2}\d{1}$" title="Введите идентификационный номер в формате: 1111111A111AA1"><br>
+				<span class="tooltiptext">Введите идентификационный номер в формате: 1111111A111AA1</span>
+			</div>
 		</fieldset>
 
 		<fieldset id="father">
