@@ -1,3 +1,15 @@
+for (let year = 1940; year <= 2024; year++) {
+  let options = document.createElement("OPTION");
+  document.getElementById("year").appendChild(options).innerHTML = year;
+  document.getElementById("year").appendChild(options).value = year;
+}
+
+for (let day = 1; day <= 31; day++) {
+  let options = document.createElement("OPTION");
+  document.getElementById("day").appendChild(options).innerHTML = day;
+  document.getElementById("day").appendChild(options).value = day;
+}
+
 function toggleFields(parentId) {
   const selectedValue = document.getElementById(parentId).querySelector('select').value;
 
@@ -115,8 +127,17 @@ document.getElementById('dataForm').addEventListener('submit', async function (e
   const formObj = {};
   formData.forEach((value, key) => {
     if (key === 'family') {
-      formObj[key] = document.querySelector(`[name="${key}"]`).id;
-    } else {
+      const checkboxes = document.querySelectorAll(`[name="${key}"]`);
+      let selectedValue = null;
+  
+      checkboxes.forEach((checkbox) => {
+          if (checkbox.checked) {
+              selectedValue = checkbox.id; // Or use checkbox.value if you want the value instead of the id
+          }
+      });
+  
+      formObj[key] = selectedValue;
+  } else {
       formObj[key] = value;
     }
   });
