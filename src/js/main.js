@@ -7,7 +7,7 @@ for (let year = 1940; year <= 2024; year++) {
 for (let day = 1; day <= 31; day++) {
   let options = document.createElement("OPTION");
   document.getElementById("day").appendChild(options).innerHTML = day;
-  document.getElementById("day").appendChild(options).value = day;
+  document.getElementById("day").appendChild(options).value = String(day).padStart(2, '0');
 }
 
 function toggleFields(parentId) {
