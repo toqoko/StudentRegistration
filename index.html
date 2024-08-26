@@ -232,19 +232,22 @@
 					<label for="orphan">Сирота</label>
 
 					<input type="checkbox" id="large_family" name="large_family">
-					<label for="large_family">Более 3 детей</label>
+					<label for="large_family">3 и более детей</label>
 			</fieldset>
 			
 			<fieldset>
 				<legend>ЧАЭС:</legend>
-					<input type="checkbox" id="chernobyl" name="chernobyl">
+					<input type="checkbox" id="chernobyl" name="chernobyl" onchange="toggleArticleField()">
 					<label for="chernobyl">Являюсь</label>
+					<div id="articleField" style="display: none;">
+						<input type="text" id="article" name="article" placeholder="Введите статью" required>
+					</div>
 			</fieldset>
 
 			<fieldset>
 				<legend>БРСМ:</legend>
 					<input type="checkbox" id="brsm" name="brsm">
-					<label for="chernobyl">Состою</label>
+					<label for="brsm">Состою</label>
 			</fieldset>
 		</fieldset>
 		
