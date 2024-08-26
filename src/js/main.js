@@ -142,7 +142,7 @@ document.getElementById('dataForm').addEventListener('submit', async function (e
     } else if(key === 'chernobyl') {
       const checkbox = document.getElementById('chernobyl'); 
       if (checkbox.checked) {
-        formObj[key] = `Являюсь ${document.getElementById('articleField').value}`;
+        formObj[key] = 'Являюсь ';
       } else {
         formObj[key] = 'Не являюсь'
       }
@@ -152,6 +152,10 @@ document.getElementById('dataForm').addEventListener('submit', async function (e
         formObj[key] = 'Состою';
       } else {
         formObj[key] = 'Не состою';
+      }
+    } else if(key === 'article') {
+      if (formObj['chernobyl'] && formObj['chernobyl'] === 'Являюсь ') {
+        formObj['chernobyl'] += value
       }
     } else {
       formObj[key] = value;
