@@ -142,7 +142,7 @@ document.getElementById('dataForm').addEventListener('submit', async function (e
     } else if(key === 'chernobyl') {
       const checkbox = document.getElementById('chernobyl'); 
       if (checkbox.checked) {
-        formObj[key] = document.getElementById('articleField');
+        formObj[key] = `Являюсь ${document.getElementById('articleField')}`;
       } else {
         formObj[key] = 'Не являюсь'
       }
