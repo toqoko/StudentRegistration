@@ -133,13 +133,27 @@ document.getElementById('dataForm').addEventListener('submit', async function (e
       let selectedValue = null;
   
       checkboxes.forEach((checkbox) => {
-          if (checkbox.checked) {
-              selectedValue = checkbox.id; // Or use checkbox.value if you want the value instead of the id
-          }
+        if (checkbox.checked) {
+          selectedValue = checkbox.id;
+        }
       });
   
       formObj[key] = selectedValue;
-  } else {
+    } else if(key === 'chernobyl') {
+      const checkbox = document.getElementById('chernobyl'); 
+      if (checkbox.checked) {
+        formObj[key] = document.getElementById('articleField');
+      } else {
+        formObj[key] = 'Не являюсь'
+      }
+    } else if(key === 'brsm') {
+      const checkbox = document.getElementById('brsm'); 
+      if (checkbox.checked) {
+        formObj[key] = 'Состою';
+      } else {
+        formObj[key] = 'Не состою';
+      }
+    } else {
       formObj[key] = value;
     }
   });
