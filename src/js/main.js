@@ -18,12 +18,12 @@ function toggleFields(parentId) {
   const fields = document.getElementById(parentId).querySelectorAll('div[class="fullName"], div[class="job"], div[class="position"], div[class="phoneNumber"]');
 
   fields.forEach(field => {
-    if (selectedValue === 'deceased' || selectedValue === 'divorced') {
+    if (selectedValue === 'deceased') {
       field.style.display = "none";
       if (field.tagName === 'INPUT') {
         field.value = '';
       }
-    } else if (['father', 'stepfather', 'mother', 'stepmother'].includes(selectedValue)) {
+    } else if (['father', 'stepfather', 'mother', 'stepmother', 'divorced'].includes(selectedValue)) {
       field.style.display = "block";
     }
   });
