@@ -188,3 +188,14 @@ document.getElementById('passportSerialNumber').addEventListener('input', functi
     e.target.setCustomValidity('');
   }
 });
+
+function toggleArticleField() {
+  const chernobylCheckbox = document.getElementById('chernobyl');
+  const articleField = document.getElementById('articleField');
+  
+  if (chernobylCheckbox.checked) {
+    articleField.style.display = 'block';
+  } else {
+    articleField.style.display = 'none';
+  }
+}
