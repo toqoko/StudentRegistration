@@ -166,6 +166,35 @@ function closeDialog() {
   document.getElementById('confirmationDialog').style.display = 'none';
 }
 
+document.getElementById('passportIDNumber').addEventListener('input', function (e) {
+  let input = e.target.value.toUpperCase();
+  let newValue = '';
+  let regex = /^\d{0,7}[A-Z]{0,1}\d{0,3}[A-Z]{0,2}\d{0,1}$/;
+
+  for (let i = 0; i < input.length; i++) {
+    if (i < 7 && /\d/.test(input[i])) {
+      newValue += input[i];
+    } else if (i === 7 && /[A-Z]/.test(input[i])) {
+      newValue += input[i];
+    } else if (i > 7 && i < 11 && /\d/.test(input[i])) {
+      newValue += input[i];
+    } else if (i > 10 && i < 13 && /[A-Z]/.test(input[i])) {
+      newValue += input[i];
+    } else if (i === 13 && /\d/.test(input[i])) {
+      newValue += input[i];
+    }
+  }
+
+  e.target.value = newValue; 
+  
+
+  if (!regex.test(input)) {
+    e.target.setCustomValidity('Введите идентификационный номер в правильном формате: 1111111A111AA1');
+  } else {
+    e.target.setCustomValidity('');
+  }
+});
+
 document.getElementById('passportSerialNumber').addEventListener('input', function (e) {
   let input = e.target.value.toUpperCase();
   let newValue = '';
