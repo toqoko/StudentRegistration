@@ -165,3 +165,26 @@ document.getElementById('dataForm').addEventListener('submit', async function (e
 function closeDialog() {
   document.getElementById('confirmationDialog').style.display = 'none';
 }
+
+document.getElementById('passportSerialNumber').addEventListener('input', function (e) {
+  let input = e.target.value.toUpperCase();
+  let newValue = '';
+  let regex = /^[A-Z]{0,2}\d{0,7}$/;
+
+  for (let i = 0; i < input.length; i++) {
+    if (i < 2 && /[A-Z]/.test(input[i])) {
+      newValue += input[i];
+    } else if (i >= 2 && /\d/.test(input[i])) {
+      newValue += input[i];
+    }
+  }
+
+  e.target.value = newValue; 
+  
+
+  if (!regex.test(input)) {
+    e.target.setCustomValidity('Введите номер паспорта в правильном формате: AA1234567');
+  } else {
+    e.target.setCustomValidity('');
+  }
+});
