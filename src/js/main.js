@@ -6,7 +6,7 @@ for (let year = 1940; year <= 2024; year++) {
 
 for (let day = 1; day <= 31; day++) {
   let options = document.createElement("OPTION");
-  let dayValue = String(day).padStart(2, '0'); // Добавляем ведущий ноль
+  let dayValue = String(day).padStart(2, '0');
   options.innerHTML = day;
   options.value = dayValue;
   document.getElementById("day").appendChild(options);
@@ -20,10 +20,13 @@ function toggleFields(parentId) {
   fields.forEach(field => {
     if (selectedValue === 'deceased') {
       field.style.display = "none";
+
       if (field.tagName === 'INPUT') {
         field.value = '';
       }
-    } else if (['father', 'stepfather', 'mother', 'stepmother', 'divorced'].includes(selectedValue)) {
+    } 
+
+    if (['father', 'stepfather', 'mother', 'stepmother', 'divorced'].includes(selectedValue)) {
       field.style.display = "block";
     }
   });
@@ -120,15 +123,23 @@ document.getElementById('dataForm').addEventListener('submit', async function (e
   event.preventDefault();
 
   const submitButton = document.getElementById('submitButton');
-  const loadingSpinner = document.getElementById('loadingSpinner');
   const confirmationDialog = document.getElementById('confirmationDialog');
 
   submitButton.innerHTML = '<div class="loading-spinner" id="loadingSpinner">';
 
   const formData = new FormData(this);
   const formObj = {};
+
+  const brsm = document.getElementById('brsm'); 
+  formObj['brsm'] = brsm.checked ? 'Состою' : 'Не состою';
+
+  const chernobyl = document.getElementById('chernobyl');
+  formObj['chernobyl'] = chernobyl.checked ? 'Являюсь ' : 'Не являюсь'; 
+
   formData.forEach((value, key) => {
-    if (key === 'family') {
+    if (key === 'brsm' || key === 'chernobyl') {
+      return;
+    } else if (key === 'family') {
       const checkboxes = document.querySelectorAll(`[name="${key}"]`);
       let selectedValue = null;
   
@@ -137,14 +148,8 @@ document.getElementById('dataForm').addEventListener('submit', async function (e
           selectedValue = checkbox.id;
         }
       });
-  
+       
       formObj[key] = selectedValue;
-    } else if(key === 'chernobyl') {
-      const chernobyl = document.getElementById('chernobyl');
-      formObj[key] = chernobyl.checked ? 'Являюсь ' : 'Не являюсь'; 
-    } else if(key === 'brsm') {
-      const brsm = document.getElementById('brsm'); 
-      formObj[key] = brsm.checked ? 'Состою' : 'Не состою';
     } else if(key === 'article') {
       if (formObj['chernobyl'] && formObj['chernobyl'] === 'Являюсь ') {
         formObj['chernobyl'] += value
