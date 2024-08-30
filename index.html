@@ -62,12 +62,12 @@
     <fieldset>
       <legend>Дата рождения:</legend>
       <label for="day">День:</label>
-      <select id="day" name="day">
-        <option>выбрать день</option>
+      <select id="day" name="day" required>
+        <option value="01">выбрать день</option>
       </select>
       <label for="month">Месяц:</label>
-      <select id="month" name="month">
-        <option>выбрать месяц</option>
+      <select id="month" name="month" required>
+        <option value="01">выбрать месяц</option>
         <option value="01">Январь</option>
         <option value="02">Февраль</option>
         <option value="03">Март</option>
@@ -82,14 +82,14 @@
         <option value="12">Декабрь</option>
       </select>
       <label for="year">Год:</label>
-      <select id="year" name="year">
-        <option>выбрать год</option>
+      <select id="year" name="year" required>
+        <option value="2000">выбрать год</option>
       </select>
     </fieldset>
     <fieldset>
       <legend>Тип документа:
         <select id="documentType" name="documentType" required>
-        <option value="Паспорт">Паспорт</option>
+        <option value="Паспорт" selected>Паспорт</option>
         <option value="ID карта">ID карта</option>
       </select>
       </legend>
@@ -211,7 +211,7 @@
       <input type="text" id="house" name="house" placeholder="33" required>
 
       <label for="zipCode">Индекс:</label>
-      <input type="text" id="zipCode" name="zipCode" placeholder="213802" required>
+      <input type="number" id="zipCode" name="zipCode" placeholder="213802" required>
     </fieldset>
     <fieldset>
       <legend>Дополнительно:</legend>

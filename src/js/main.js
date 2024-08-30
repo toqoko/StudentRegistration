@@ -16,18 +16,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 function toggleFields(parentId) {
-  const selectElement = document.getElementById(parentId).querySelector('select');
-  const selectedValue = selectElement.value;
+  const selectedValue = document.getElementById(parentId).querySelector('select').value;
 
-  const fields = document.getElementById(parentId).querySelectorAll('.fullName, .job, .position, .phoneNumber');
+  const fields = document.getElementById(parentId).querySelectorAll('div[class="fullName"], div[class="job"], div[class="position"], div[class="phoneNumber"]');
 
   fields.forEach(field => {
     if (selectedValue === 'deceased') {
-      field.style.display = 'none';
-      const input = field.querySelector('input');
-      if (input) input.value = '';  
-    } else {
-      field.style.display = 'block';
+      field.style.display = "none";
+
+      if (field.tagName === 'INPUT') {
+        field.value = '';
+      }
+    } 
+
+    if (['father', 'stepfather', 'mother', 'stepmother', 'divorced'].includes(selectedValue)) {
+      field.style.display = "block";
     }
   });
 }
@@ -123,7 +126,6 @@ document.getElementById('dataForm').addEventListener('submit', async (event) => 
 
   const submitButton = document.getElementById('submitButton');
   const confirmationDialog = document.getElementById('confirmationDialog');
-  const documentType = document.getElementById('documentType').value;
   
   toggleLoadingState(submitButton, true);
 
@@ -134,7 +136,6 @@ document.getElementById('dataForm').addEventListener('submit', async (event) => 
     const orders = await fetchOrders();
     orders.students.push(formObj);
     
-    // Post updated orders
     await postOrder(orders);
 
     toggleLoadingState(submitButton, false);
@@ -163,6 +164,7 @@ function buildFormObject(formData) {
   const chernobyl = document.getElementById('chernobyl');
   formObj['chernobyl'] = chernobyl.checked ? 'Являюсь ' : 'Не являюсь';
 
+  
   formData.forEach((value, key) => {
     if (key === 'brsm' || key === 'chernobyl') {
       return;
@@ -172,8 +174,6 @@ function buildFormObject(formData) {
       if (formObj['chernobyl'] === 'Являюсь ') {
         formObj['chernobyl'] += `Ст: ${value}`;
       }
-    } else if (key === 'passportSerialNumber') {
-      formObj[key] = `(${documentType})\n${value}`;
     } else {
       formObj[key] = value;
     }
@@ -283,4 +283,53 @@ document.getElementById('documentType').addEventListener('change', function() {
       document.getElementById('passportFields').style.display = 'none';
       document.getElementById('idCardFields').style.display = 'block';
   }
+});
+
+function toggleFieldsPassporID() {
+  const documentType = document.getElementById('documentType').value;
+  const passportFields = document.getElementById('passportFields');
+  const idCardFields = document.getElementById('idCardFields');
+
+  if (documentType === 'Паспорт') {
+    passportFields.style.display = 'block';
+    idCardFields.style.display = 'none';
+
+    setFieldRequired('passportSerialNumber', true);
+    setFieldRequired('passportIssuedDate', true);
+    setFieldRequired('passportIssuedAuthority', true);
+    setFieldRequired('passportIDNumber', true);
+
+    setFieldRequired('idCardNumber', false);
+    setFieldRequired('idCardIssuedDate', false);
+    setFieldRequired('idCardIssuedAuthority', false);
+    setFieldRequired('idCardIDNumber', false);
+  } else if (documentType === 'ID карта') {
+    passportFields.style.display = 'none';
+    idCardFields.style.display = 'block';
+
+    setFieldRequired('idCardNumber', true);
+    setFieldRequired('idCardIssuedDate', true);
+    setFieldRequired('idCardIssuedAuthority', true);
+    setFieldRequired('idCardIDNumber', true);
+
+    setFieldRequired('passportSerialNumber', false);
+    setFieldRequired('passportIssuedDate', false);
+    setFieldRequired('passportIssuedAuthority', false);
+    setFieldRequired('passportIDNumber', false);
+  }
+}
+
+function setFieldRequired(fieldId, isRequired) {
+  const field = document.getElementById(fieldId);
+  if (isRequired) {
+    field.setAttribute('required', 'required');
+  } else {
+    field.innerHTML = '';
+    field.removeAttribute('required');
+  }
+}
+
+window.addEventListener('DOMContentLoaded', (event) => {
+  document.getElementById('documentType').addEventListener('change', toggleFieldsPassporID);
+  toggleFieldsPassporID(); 
 });
