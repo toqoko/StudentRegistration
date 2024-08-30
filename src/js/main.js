@@ -1,33 +1,33 @@
-for (let year = 1940; year <= 2024; year++) {
-  let options = document.createElement("OPTION");
-  document.getElementById("year").appendChild(options).innerHTML = year;
-  document.getElementById("year").appendChild(options).value = year;
-}
+document.addEventListener('DOMContentLoaded', (event) => {
+  for (let year = 1940; year <= 2024; year++) {
+    let options = document.createElement("OPTION");
+    options.innerHTML = year;
+    options.value = year;
+    document.getElementById("year").appendChild(options);
+  }
 
-for (let day = 1; day <= 31; day++) {
-  let options = document.createElement("OPTION");
-  let dayValue = String(day).padStart(2, '0');
-  options.innerHTML = day;
-  options.value = dayValue;
-  document.getElementById("day").appendChild(options);
-}
+  for (let day = 1; day <= 31; day++) {
+    let options = document.createElement("OPTION");
+    let dayValue = String(day).padStart(2, '0');
+    options.innerHTML = day;
+    options.value = dayValue;
+    document.getElementById("day").appendChild(options);
+  }
+});
 
 function toggleFields(parentId) {
-  const selectedValue = document.getElementById(parentId).querySelector('select').value;
+  const selectElement = document.getElementById(parentId).querySelector('select');
+  const selectedValue = selectElement.value;
 
-  const fields = document.getElementById(parentId).querySelectorAll('div[class="fullName"], div[class="job"], div[class="position"], div[class="phoneNumber"]');
+  const fields = document.getElementById(parentId).querySelectorAll('.fullName, .job, .position, .phoneNumber');
 
   fields.forEach(field => {
     if (selectedValue === 'deceased') {
-      field.style.display = "none";
-
-      if (field.tagName === 'INPUT') {
-        field.value = '';
-      }
-    } 
-
-    if (['father', 'stepfather', 'mother', 'stepmother', 'divorced'].includes(selectedValue)) {
-      field.style.display = "block";
+      field.style.display = 'none';
+      const input = field.querySelector('input');
+      if (input) input.value = '';  
+    } else {
+      field.style.display = 'block';
     }
   });
 }
@@ -69,8 +69,7 @@ const regions = {
 }
 
 function setRegion() {
-  const cityInput = document.getElementById("city");
-  cityInput.removeAttribute("list");
+  document.getElementById("city").removeAttribute("list");
 }
 
 function inputCity() {
@@ -119,119 +118,150 @@ async function postOrder(data) {
   });
 }
 
-document.getElementById('dataForm').addEventListener('submit', async function (event) {
+document.getElementById('dataForm').addEventListener('submit', async (event) => {
   event.preventDefault();
 
   const submitButton = document.getElementById('submitButton');
   const confirmationDialog = document.getElementById('confirmationDialog');
+  const documentType = document.getElementById('documentType').value;
+  
+  toggleLoadingState(submitButton, true);
 
-  submitButton.innerHTML = '<div class="loading-spinner" id="loadingSpinner">';
+  const formData = new FormData(event.target);
+  const formObj = buildFormObject(formData);
 
-  const formData = new FormData(this);
+  try {
+    const orders = await fetchOrders();
+    orders.students.push(formObj);
+    
+    // Post updated orders
+    await postOrder(orders);
+
+    toggleLoadingState(submitButton, false);
+    showConfirmation(confirmationDialog);
+  } catch (error) {
+    console.error('Error during fetch operation:', error);
+    toggleLoadingState(submitButton, false);
+    alert('Ошибка при отправке данных.');
+  }
+});
+
+function toggleLoadingState(button, isLoading) {
+  button.innerHTML = isLoading ? '<div class="loading-spinner" id="loadingSpinner"></div>' : 'Отправить';
+}
+
+function showConfirmation(dialog) {
+  dialog.style.display = 'block';
+}
+
+function buildFormObject(formData) {
   const formObj = {};
 
-  const brsm = document.getElementById('brsm'); 
+  const brsm = document.getElementById('brsm');
   formObj['brsm'] = brsm.checked ? 'Состою' : 'Не состою';
 
   const chernobyl = document.getElementById('chernobyl');
-  formObj['chernobyl'] = chernobyl.checked ? 'Являюсь ' : 'Не являюсь'; 
+  formObj['chernobyl'] = chernobyl.checked ? 'Являюсь ' : 'Не являюсь';
 
   formData.forEach((value, key) => {
     if (key === 'brsm' || key === 'chernobyl') {
       return;
     } else if (key === 'family') {
-      const checkboxes = document.querySelectorAll(`[name="${key}"]`);
-      let selectedValue = null;
-  
-      checkboxes.forEach((checkbox) => {
-        if (checkbox.checked) {
-          selectedValue = checkbox.id;
-        }
-      });
-       
-      formObj[key] = selectedValue;
-    } else if(key === 'article') {
-      if (formObj['chernobyl'] && formObj['chernobyl'] === 'Являюсь ') {
-        formObj['chernobyl'] += value
+      formObj[key] = getSelectedFamilyValue(key);
+    } else if (key === 'article') {
+      if (formObj['chernobyl'] === 'Являюсь ') {
+        formObj['chernobyl'] += `Ст: ${value}`;
       }
+    } else if (key === 'passportSerialNumber') {
+      formObj[key] = `(${documentType})\n${value}`;
     } else {
       formObj[key] = value;
     }
   });
 
-  try {
-    const orders = await fetchOrders();
-    orders.students.push(formObj);
-    await postOrder(orders);
+  return formObj;
+}
 
-    submitButton.innerHTML = 'Отправить';
+function getSelectedFamilyValue(key) {
+  const checkboxes = document.querySelectorAll(`[name="${key}"]`);
+  let selectedValue = null;
 
-    confirmationDialog.style.display = 'block';
-  } catch (error) {
-    console.error('There was a problem with the fetch operation:', error);
+  checkboxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      selectedValue = checkbox.id;
+    }
+  });
 
-    submitButton.innerHTML = 'Отправить';
-
-    confirmationDialog.style.display = 'block';
-    alert('Ошибка при отправке данных.');
-  }
-});
+  return selectedValue;
+}
 
 function closeDialog() {
   document.getElementById('confirmationDialog').style.display = 'none';
 }
 
-document.getElementById('passportIDNumber').addEventListener('input', function (e) {
-  let input = e.target.value.toUpperCase();
-  let newValue = '';
-  let regex = /^\d{0,7}[A-Z]{0,1}\d{0,3}[A-Z]{0,2}\d{0,1}$/;
+function handleInputFormatting(inputElement, regexPattern, formatMessage, formatRules) {
+  inputElement.addEventListener('input', function (e) {
+    const input = e.target.value.toUpperCase();
+    let formattedValue = '';
 
-  for (let i = 0; i < input.length; i++) {
-    if (i < 7 && /\d/.test(input[i])) {
-      newValue += input[i];
-    } else if (i === 7 && /[A-Z]/.test(input[i])) {
-      newValue += input[i];
-    } else if (i > 7 && i < 11 && /\d/.test(input[i])) {
-      newValue += input[i];
-    } else if (i > 10 && i < 13 && /[A-Z]/.test(input[i])) {
-      newValue += input[i];
-    } else if (i === 13 && /\d/.test(input[i])) {
-      newValue += input[i];
+    for (let i = 0; i < input.length; i++) {
+      if (formatRules(i, input[i])) {
+        formattedValue += input[i];
+      }
     }
-  }
 
-  e.target.value = newValue; 
-  
+    e.target.value = formattedValue;
 
-  if (!regex.test(input)) {
-    e.target.setCustomValidity('Введите идентификационный номер в правильном формате: 1111111A111AA1');
-  } else {
-    e.target.setCustomValidity('');
-  }
-});
-
-document.getElementById('passportSerialNumber').addEventListener('input', function (e) {
-  let input = e.target.value.toUpperCase();
-  let newValue = '';
-  let regex = /^[A-Z]{0,2}\d{0,7}$/;
-
-  for (let i = 0; i < input.length; i++) {
-    if (i < 2 && /[A-Z]/.test(input[i])) {
-      newValue += input[i];
-    } else if (i >= 2 && /\d/.test(input[i])) {
-      newValue += input[i];
+    if (!regexPattern.test(formattedValue)) {
+      e.target.setCustomValidity(formatMessage);
+    } else {
+      e.target.setCustomValidity('');
     }
-  }
+  });
+}
 
-  e.target.value = newValue; 
-  
+function passportIDNumberRules(index, char) {
+  return (
+    (index < 7 && /\d/.test(char)) ||
+    (index === 7 && /[A-Z]/.test(char)) ||
+    (index > 7 && index < 11 && /\d/.test(char)) ||
+    (index > 10 && index < 13 && /[A-Z]/.test(char)) ||
+    (index === 13 && /\d/.test(char))
+  );
+}
 
-  if (!regex.test(input)) {
-    e.target.setCustomValidity('Введите номер паспорта в правильном формате: AA1234567');
-  } else {
-    e.target.setCustomValidity('');
-  }
-});
+function passportSerialNumberRules(index, char) {
+  return (index < 2 && /[A-Z]/.test(char)) || (index >= 2 && /\d/.test(char));
+}
+
+handleInputFormatting(
+  document.getElementById('passportIDNumber'),
+  /^\d{0,7}[A-Z]{0,1}\d{0,3}[A-Z]{0,2}\d{0,1}$/,
+  'Введите идентификационный номер в правильном формате: 1111111A111AA1',
+  passportIDNumberRules
+);
+
+handleInputFormatting(
+  document.getElementById('passportSerialNumber'),
+  /^[A-Z]{0,2}\d{0,7}$/,
+  'Введите номер паспорта в правильном формате: AA1234567',
+  passportSerialNumberRules
+);
+
+handleInputFormatting(
+  document.getElementById('idCardIDNumber'),
+  /^\d{0,7}[A-Z]{0,1}\d{0,3}[A-Z]{0,2}\d{0,1}$/,
+  'Введите идентификационный номер в правильном формате: 1111111A111AA1',
+  passportIDNumberRules
+);
+
+handleInputFormatting(
+  document.getElementById('idCardNumber'),
+  /^[A-Z]{0,2}\d{0,7}$/,
+  'Введите номер паспорта в правильном формате: AA1234567',
+  passportSerialNumberRules
+);
+
 
 function toggleArticleField() {
   const chernobylCheckbox = document.getElementById('chernobyl');
@@ -243,3 +273,14 @@ function toggleArticleField() {
     articleField.style.display = 'none';
   }
 }
+
+document.getElementById('documentType').addEventListener('change', function() {
+  var documentType = this.value;
+  if (documentType === 'Паспорт') {
+      document.getElementById('passportFields').style.display = 'block';
+      document.getElementById('idCardFields').style.display = 'none';
+  } else if (documentType === 'ID карта') {
+      document.getElementById('passportFields').style.display = 'none';
+      document.getElementById('idCardFields').style.display = 'block';
+  }
+});
