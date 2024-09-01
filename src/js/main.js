@@ -99,23 +99,11 @@ function inputCity() {
   cityInput.parentNode.insertBefore(dataList, cityInput.nextSibling);
 }
 
-async function fetchOrders() {
-  const response = await fetch("https://api.jsonbin.io/v3/b/6664b1e2e41b4d34e40074ee", {
-    method: "GET",
-    headers: {
-      'X-Master-Key': '$2a$10$Hq5gKFixg3LMVqftryL4cOi9Kq1PgXDCCPezf1eQews5pxBDg2Zi.'
-    }
-  });
-  const json = await response.json();
-  return json['record'];
-}
-
 async function postOrder(data) {
-  return fetch("https://api.jsonbin.io/v3/b/6664b1e2e41b4d34e40074ee", {
-    method: "PUT",
+  return fetch("https://toqokodev.pythonanywhere.com/add", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      'X-Master-Key': '$2a$10$Hq5gKFixg3LMVqftryL4cOi9Kq1PgXDCCPezf1eQews5pxBDg2Zi.'
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)
   });
@@ -133,10 +121,7 @@ document.getElementById('dataForm').addEventListener('submit', async (event) => 
   const formObj = buildFormObject(formData);
 
   try {
-    const orders = await fetchOrders();
-    orders.students.push(formObj);
-    
-    await postOrder(orders);
+    await postOrder(formObj);
 
     toggleLoadingState(submitButton, false);
     showConfirmation(confirmationDialog);
